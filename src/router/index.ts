@@ -1,15 +1,15 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
 
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'home', component: Home },
   {
     path: '/builder',
-    name: 'builder',
     component: async () => await import('@/views/Builder.vue'),
     children: [
+      { path: '', name: 'builder', component: async () => await import('@/components/CvSection/ProgressTracker.vue') },
       { path: 'personal-information', name: 'personal-information', component: async () => await import('@/views/PersonalInfo.vue') },
-      { path: 'contat-forms', name: 'contat-forms', component: async () => await import('@/views/ContactForms.vue') },
+      { path: 'contact-forms', name: 'contact-forms', component: async () => await import('@/views/ContactForms.vue') },
       { path: 'professional-profile', name: 'professional-profile', component: async () => await import('@/views/ProfessionalProfile.vue') },
       { path: 'experience', name: 'experience', component: async () => await import('@/views/Experience.vue') },
       { path: 'education', name: 'education', component: async () => await import('@/views/Education.vue') },
@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes
 })
 
