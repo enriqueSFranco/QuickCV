@@ -5,11 +5,13 @@ module.exports = {
     },
     "extends": [
         "standard-with-typescript",
-        "plugin:vue/vue3-essential"
+        "plugin:vue/vue3-essential",
+        "./node_modules/ts-standard/eslintrc.json"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "vue"
