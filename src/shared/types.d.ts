@@ -15,3 +15,9 @@ export interface PersonalInformation extends People {
   job: string
   email: string
 }
+
+// FORMULARIO [FORMAS DE CONTACTO]
+export interface ContactForm {
+  id: string
+  url: string
+}
