@@ -1,4 +1,5 @@
 <template>
+  <div class="w-full h-screen dark:bg-slate-950 text-slate-50">
   <div class="h-screen w-full dark:bg-slate-950 text-slate-200">
     <Navbar />
     <slot></slot>
@@ -15,3 +16,5 @@ export default {
   }
 }
 </script>
+
+<style scoped></style>
