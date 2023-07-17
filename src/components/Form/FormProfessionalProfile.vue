@@ -1,6 +1,6 @@
 <template>
   <form action="">
-    <BaseTextArea />
+    <BaseTextArea v-model="store.formData.summary" :placeholder="'perfil profesional'" />
   </form>
   <footer class="w-full flex flex-grow items-end">
     <nav class="w-full flex items-center">
@@ -17,11 +17,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import BaseTextArea from '../TextArea/BaseTextArea.vue'
+import { useProfessinalProfile } from '@/stores/professionalProfile';
 
 export default defineComponent({
   name: 'FormProfessionalProfile',
   components: {
     BaseTextArea
+  },
+  setup () {
+    const store = useProfessinalProfile()
+    const formData = { summary: store.formData.summary }
+    store.updateForm(formData)
+    return { store }
   }
 })
 </script>
