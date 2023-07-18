@@ -35,6 +35,11 @@ export interface Education {
   dateEnd: string
 }
 
+export interface Skill {
+  id: Id
+  skill: string
+}
+
 // ENUMS
 export enum STORE_NAME {
   PERSONAL_INFORMATION = 'Personal_Information',
@@ -42,5 +47,5 @@ export enum STORE_NAME {
   WEBSITE = 'Website',
   EXPERIENCE = 'Experience',
   EDUCATION = 'Education',
-  KNOWLEDGE = 'knowledge'
+  SKILLS = 'skills'
 }
