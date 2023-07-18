@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="grid grid-cols-1 gap-8">
     <header class="w-full flex flex-col gap-2">
       <h2 class="font-bold capitalize [&>p]:tracking-wide">{{ titleView }}</h2>
       <p>{{ subtitleView }}</p>
