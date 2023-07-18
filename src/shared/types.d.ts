@@ -16,8 +16,20 @@ export interface PersonalInformation extends People {
   email: string
 }
 
-// FORMULARIO [FORMAS DE CONTACTO]
-export interface ContactForm {
-  id: string
+export interface ProfessionalProfile {
+  summary: string
+}
+
+export interface Website {
+  id: `${string}-${string}-${string}-${string}-${string}`
   url: string
+}
+
+// ENUMS
+export enum STORE_NAME {
+  PERSONAL_INFORMATION = 'Personal_Information',
+  PROFESSIONAL_PROFILE = 'Professional_Profile',
+  WEBSITE = 'Website',
+  EXPERIENCE = 'Experience',
+  KNOWLEDGE = 'knowledge'
 }
