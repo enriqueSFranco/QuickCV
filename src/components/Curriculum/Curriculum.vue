@@ -1,24 +1,27 @@
 <template>
-  <section class="w-full h-full flex flex-col items-center border border-slate-800 rounded-lg p-4">
-    <h2>Curriculum</h2>
-    <p>{{ store.formData.name }}</p>
-    <p>{{ store.formData.lastName }}</p>
-    <footer class="flex flex-grow items-end justify-center">
+  <section class="w-full h-full flex flex-col items-center">
+    <canvas id="the-canvas" width="594" height="650" class="rounded-xl opacity-70 shadow-lg bg-slate-800/40"></canvas>
+    <footer class="w-full flex flex-grow items-end justify-center">
       <button>descargar curriculum</button>
     </footer>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import { usePersonalInformation } from '@/stores/personalInformation'
+import { pageviewer } from '@/helpers/pageviewer'
+import { useProfessinalProfile } from '@/stores/professionalProfile'
 
 export default defineComponent({
   name: 'Curriculum',
   setup () {
-    const store = usePersonalInformation()
+    const personalInformationStore = usePersonalInformation()
+    const professionalProfileStore = useProfessinalProfile()
 
-    return { store }
+    onMounted(() => {
+      pageviewer({ text: { personalInformation: personalInformationStore.formData, professionalProfile: professionalProfileStore.formData } })
+    })
   }
 })
 </script>

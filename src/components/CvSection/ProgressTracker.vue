@@ -7,20 +7,20 @@
       <h2 className='font-bold text-left text-md uppercase lg:text-xl'>Selecciona una sección para comenzar</h2>
     </nav>
   </header>
-  <div class="w-full h-full">
-    <ul class="divide-y divide-slate-800">
-      <li v-for="cvSection of cvSections" :key="cvSection.id">
+  <ul class="grid grid-cols-1 divide-y divide-slate-800">
+    <li v-for="cvSection of cvSections" :key="cvSection.id">
+      <router-link :to="{ name: cvSection.href }">
         <CvSection :payload="cvSection" />
-      </li>
-    </ul>
-  </div>
+      </router-link>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import data from '@/api/data.json'
 import CvSection from './CvSection.vue';
-import arrowLeft from '@/assets/icons/arrow-left-square.svg'
+import arrowLeft from '@/assets/icons/arrow-left.svg'
 
 export default defineComponent({
   name: 'ProgressTracker',

@@ -1,3 +1,5 @@
+type Id = `${string}-${string}-${string}-${string}-${string}`
+
 export interface SectionCv {
   id: number
   title: string
@@ -21,8 +23,21 @@ export interface ProfessionalProfile {
 }
 
 export interface Website {
-  id: `${string}-${string}-${string}-${string}-${string}`
+  id: Id
   url: string
+}
+
+export interface Education {
+  id: Id
+  school: string
+  degree: string
+  dateInit: string
+  dateEnd: string
+}
+
+export interface Skill {
+  id: Id
+  skill: string
 }
 
 // ENUMS
@@ -31,5 +46,6 @@ export enum STORE_NAME {
   PROFESSIONAL_PROFILE = 'Professional_Profile',
   WEBSITE = 'Website',
   EXPERIENCE = 'Experience',
-  KNOWLEDGE = 'knowledge'
+  EDUCATION = 'Education',
+  SKILLS = 'skills'
 }
