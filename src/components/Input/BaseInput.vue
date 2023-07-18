@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full flex flex-col gap-2">
-    <label v-if="label">{{ label }}</label>
+  <label v-if="label" class="w-full h-full flex flex-col gap-2">
+    <span>{{ label }}</span>
     <input v-bind="$attrs" :placeholder="placeholder" :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="p-3 outline-none border-none rounded-lg bg-slate-800 w-full">
-  </div>
+      class="w-full p-3 outline-none border-none rounded-lg bg-slate-800">
+  </label>
 </template>
 
 <script lang="ts">

@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'professional-profile', name: 'professional-profile', component: async () => await import('@/views/ProfessionalProfile.vue') },
       { path: 'experience', name: 'experience', component: async () => await import('@/views/Experience.vue') },
       { path: 'education', name: 'education', component: async () => await import('@/views/Education.vue') },
-      { path: 'knowledge', name: 'knowledge', component: async () => await import('@/views/Knowledge.vue') }
+      { path: 'knowledge', name: 'knowledge', component: async () => await import('@/views/Skills.vue') }
     ]
   }
 ]

@@ -1,14 +1,13 @@
 <template>
   <form class="w-full flex flex-col gap-2 text-sm">
-    <BaseInput type="text" :placeholder="'Carlos Enrique'" :label="'Nombre'" v-model="form.name" />
-    <BaseInput type="text" :placeholder="'Salinas Franco'" :label="'Apellidos'" v-model="form.lastName" />
-    <BaseInput type="text" :placeholder="'Frontend Developer'" :label="'Puesto'" v-model="form.job" />
-    <BaseInput type="email" :placeholder="'kike@gmail.com'" :label="'Correo electronico'" v-model="form.email" />
+    <BaseInput type="text" name="name" :placeholder="'Carlos Enrique'" :label="'Nombre'" v-model="store.formData.name" />
+    <BaseInput type="text" name="lastName" :placeholder="'Salinas Franco'" :label="'Apellidos'"
+      v-model="store.formData.lastName" />
+    <BaseInput type="text" name="job" :placeholder="'Frontend Developer'" :label="'Puesto'"
+      v-model="store.formData.job" />
+    <BaseInput type="email" name="email" :placeholder="'kike@gmail.com'" :label="'Correo electronico'"
+      v-model="store.formData.email" />
   </form>
-  <!-- <footer>
-    <nav>
-    </nav>
-  </footer> -->
   <footer class="w-full flex flex-grow items-end">
     <nav class="w-full flex items-center">
       <div class="w-full grid grid-cols-2 justify-items-end">
@@ -22,8 +21,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
-import { PersonalInformation } from '@/shared/types.d'
+import { defineComponent } from 'vue'
+import { storeToRefs } from 'pinia'
+import { usePersonalInformation } from '@/stores/personalInformation'
 import BaseInput from '@/components/Input/BaseInput.vue'
 
 export default defineComponent({
@@ -32,14 +32,10 @@ export default defineComponent({
     BaseInput
   },
   setup () {
-    const form: PersonalInformation = reactive({
-      name: '',
-      lastName: '',
-      job: '',
-      email: ''
-    })
-
-    return { form }
+    const store = usePersonalInformation()
+    const { formData } = storeToRefs(store)
+    store.updateForm({ name: formData.value.name, lastName: formData.value.lastName, job: formData.value.job, email: formData.value.email })
+    return { store }
   }
 })
 </script>
