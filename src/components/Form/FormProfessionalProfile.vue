@@ -1,5 +1,5 @@
 <template>
-  <form action="">
+  <form>
     <BaseTextArea v-model="store.formData.summary" :placeholder="'perfil profesional'" />
   </form>
   <footer class="w-full flex flex-grow items-end">
