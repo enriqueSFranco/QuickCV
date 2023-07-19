@@ -12,4 +12,5 @@
 <script setup lang="ts">
 import Layout from '@/layouts/Layout.vue'
 import Curriculum from '@/components/Curriculum/Curriculum.vue'
+
 </script>
