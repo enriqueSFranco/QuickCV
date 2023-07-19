@@ -2,8 +2,9 @@
   <LayoutForm>
     <BaseInput :label="'empresa'" :placeholder="'Sngular'" />
     <BaseInput :label="'puesto'" :placeholder="'Sngular'" />
-    <div class="flex items-center justify-between gap-4">
+    <div class="h-full flex items-center justify-between gap-3">
       <BaseInput :label="'fecha de inicio'" :placeholder="'04/2020'" />
+      <Icon :src="arrowLeftIcon" :alt="'arrow-left icon'" />
       <BaseInput :label="'fecha de finalización'" :placeholder="'10/22'" />
     </div>
     <BaseTextArea :label="'mis responsabilidades fueron'" :placeholder="'coger con la secretaria'" />
@@ -23,6 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import arrowLeftIcon from '@/assets/icons/arrow-right-large.svg'
 import addIcon from '@/assets/icons/add.svg'
 import LayoutForm from '@/layouts/LayoutForm.vue'
 import BaseInput from '../Input/BaseInput.vue'
@@ -33,7 +35,7 @@ export default defineComponent({
   name: 'FormExperience',
   components: { LayoutForm, BaseInput, BaseTextArea, Icon },
   setup () {
-    return { addIcon }
+    return { addIcon, arrowLeftIcon }
   }
 })
 </script>
