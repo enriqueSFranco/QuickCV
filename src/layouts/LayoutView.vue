@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="w-full flex flex-col gap-8">
     <header class="w-full flex flex-col gap-2">
       <h2 class="font-bold capitalize [&>p]:tracking-wide">{{ titleView }}</h2>
       <p>{{ subtitleView }}</p>
