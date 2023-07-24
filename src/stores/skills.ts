@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { STORE_NAME, type Skill } from '@/shared/types.d'
 
+type SkillId = Pick<Skill, 'id'>
+
 const getDefaultSettings = (): Skill[] => ([{
   id: crypto.randomUUID(),
   skill: ''
@@ -23,7 +25,17 @@ export const useSkills = defineStore(STORE_NAME.SKILLS, {
   },
   actions: {
     createSkill () {
-
+      const newSkill: Skill = {
+        id: crypto.randomUUID(),
+        skill: ''
+      }
+      const skills = this.formData
+      skills.push(newSkill)
+    },
+    deleteSkill ({ id }: SkillId) {
+      let skills = this.formData
+      const newSkills = skills.filter(skill => skill.id !== id)
+      skills = newSkills
     }
   }
 })
