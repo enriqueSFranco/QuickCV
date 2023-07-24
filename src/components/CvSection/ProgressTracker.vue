@@ -1,7 +1,8 @@
 <template>
   <header class="w-full h-10">
     <nav class="w-full h-full flex items-center justify-start gap-2">
-      <router-link :to="{ name: 'home' }">
+      <router-link :to="{ name: 'home' }"
+        class="bg-slate-400/20 rounded-full w-8 h-8 grid place-items-center cursor-pointer">
         <img :src="arrowLeft" alt="icon-arrow-left">
       </router-link>
       <h2 className='font-bold text-left text-md uppercase lg:text-xl'>Selecciona una sección para comenzar</h2>

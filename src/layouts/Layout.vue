@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full dark:bg-slate-950 text-slate-200">
+  <div class="w-full h-screen text-slate-200">
     <Navbar />
     <slot></slot>
   </div>

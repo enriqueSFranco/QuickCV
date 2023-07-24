@@ -47,5 +47,6 @@ export enum STORE_NAME {
   WEBSITE = 'Website',
   EXPERIENCE = 'Experience',
   EDUCATION = 'Education',
-  SKILLS = 'skills'
+  SKILLS = 'Skills',
+  PREVIEW_CURRICULUM = 'Preview_Curriculum'
 }
