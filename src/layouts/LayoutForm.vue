@@ -1,5 +1,5 @@
 <template>
-  <form class="w-full grid grid-cols-1 gap-5">
+  <form class="w-2/3 h-full flex flex-col items-center justify-center gap-5">
     <slot></slot>
   </form>
 </template>

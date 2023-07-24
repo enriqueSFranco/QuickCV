@@ -14,7 +14,7 @@
             class="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 blur opacity-75 rounded-lg leading-none">
           </div>
           <router-link :to="{ name: 'builder' }"
-            class="relative inline-flex w-40 h-12 items-center justify-center capitalize z-20 bg-slate-950 rounded-lg">
+            class="relative inline-flex w-40 h-12 items-center justify-center capitalize z-20 font-semibold bg-slate-800 text-slate-50 rounded-lg">
             Comenzar
           </router-link>
         </div>

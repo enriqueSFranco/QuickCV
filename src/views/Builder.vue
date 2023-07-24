@@ -1,7 +1,7 @@
 <template>
   <Layout>
-    <section class="w-full h-[calc(100vh-4rem)] grid grid-cols-1 gap-4 xl:grid-cols-2 p-4">
-      <article class="w-full h-full flex flex-col justify-between gap-4 border border-slate-800 rounded-lg p-4">
+    <section class="w-full h-full flex items-center justify-center">
+      <article class="w-full h-full bg-slate-50 overflow-y-scroll flex flex-col items-center gap-4 p-4">
         <router-view v-slot="{ Component, route }">
           <transition name="scale" mode="out-in">
             <div :key="route.name">

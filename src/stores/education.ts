@@ -35,15 +35,13 @@ export const useEducation = defineStore(STORE_NAME.EDUCATION, {
         dateEnd: ''
       }
       this.formData.push(newForm)
-      watch(this.formData, state => {
-        window.localStorage.setItem(STORE_NAME.EDUCATION, JSON.stringify(state))
-      })
     },
     deleteForm (formId: Id) {
       console.log('delete')
       const forms = this.formData
       const newForms = forms.filter(form => form.id !== formId)
       this.formData = newForms
+      window.localStorage.setItem(STORE_NAME.EDUCATION, JSON.stringify(this.formData))
     },
     updateForm () {
       watch(this.formData, state => {

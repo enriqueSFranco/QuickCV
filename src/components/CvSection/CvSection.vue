@@ -1,8 +1,8 @@
 <template>
   <div class="w-full h-auto my-4 flex justify-between items-center gap-4">
     <div class="w-full h-full flex flex-col justify-between gap-1">
-      <h2 class="uppercase font-bold">{{ payload.title }}</h2>
-      <p class="tracking-wide text-slate-200">{{ payload.summary }}</p>
+      <h2 class="uppercase font-bold text-slate-950">{{ payload.title }}</h2>
+      <p class="tracking-wide text-slate-800">{{ payload.summary }}</p>
     </div>
     <img :src="arrowRight" alt="icon-arrow-right" />
   </div>

@@ -3,10 +3,10 @@
     <LayoutForm>
       <header class="flex items-center justify-between text-sm font-bold">
         <div class="flex items-center gap-4">
-          <span class="w-9 h-9 bg-slate-800 grid place-items-center rounded-full">{{ idx + 1 }}</span>
+          <span class="w-9 h-9 bg-slate-800 grid place-items-center rounded-full text-slate-50">{{ idx + 1 }}</span>
           <h2>{{ hasTitle(form.id) }}</h2>
         </div>
-        <nav>
+        <nav v-if="hasMultipleForms">
           <button @click="educationStore.deleteForm(form.id)">
             <Icon :src="deleteIcon" :alt="'delete icon'" />
           </button>
@@ -59,7 +59,9 @@ export default defineComponent({
       return hasSchool.length === 0 ? 'No especificado' : forms[formIdx].school
     })
 
-    return { educationStore, formData, hasTitle, deleteIcon }
+    educationStore.updateForm()
+
+    return { educationStore, formData, hasTitle, hasMultipleForms, deleteIcon }
   }
 })
 </script>

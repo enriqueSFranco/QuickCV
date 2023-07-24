@@ -24,7 +24,7 @@ export const useWebsite = defineStore(STORE_NAME.WEBSITE, {
     updated () {
       watch(this.formData, state => {
         window.localStorage.setItem(STORE_NAME.WEBSITE, JSON.stringify(state))
-      })
+      }, { deep: true })
     },
     createWebsite () {
       const newWebsite: Website = {
@@ -37,6 +37,7 @@ export const useWebsite = defineStore(STORE_NAME.WEBSITE, {
       const websites = this.formData
       const newWebsites = websites.filter(website => website.id !== id)
       this.formData = newWebsites
+      window.localStorage.setItem(STORE_NAME.WEBSITE, JSON.stringify(this.formData))
     }
   }
 })
