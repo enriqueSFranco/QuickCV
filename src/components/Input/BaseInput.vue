@@ -3,7 +3,7 @@
     <span>{{ label }}</span>
     <input v-bind="$attrs" :placeholder="placeholder" :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="w-full p-3 outline-none border-none rounded-lg bg-slate-800">
+      class="w-full p-3 outline-none border-none rounded-lg bg-slate-200">
   </label>
 </template>
 

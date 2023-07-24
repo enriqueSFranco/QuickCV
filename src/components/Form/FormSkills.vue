@@ -8,7 +8,7 @@
         </div>
         <nav>
           <template v-if="hasMultipleForms">
-            <button>
+            <button @click="skillsStore.deleteSkill({ id: form.id })">
               <Icon :src="deleteIcon" :alt="'delete icon'" />
             </button>
           </template>
@@ -16,7 +16,6 @@
       </header>
       <BaseInput type="text" :placeholder="'typescript'" :label="'Enlace'" v-model="form.skill" />
     </LayoutForm>
-
   </div>
   <footer class="w-full h-12 flex flex-grow items-end">
     <nav class="w-full flex items-center justify-between">

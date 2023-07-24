@@ -1,12 +1,12 @@
 <template>
-  <form class="w-full flex flex-col gap-4">
+  <LayoutForm>
     <div v-for="website of formData" :key="website.id" class="w-full h-full flex items-center justify-between">
       <BaseInput type="text" :placeholder="'https://github.com/enriqueSFranco'" :label="'Enlace'" v-model="website.url" />
       <template v-if="hasMultipleWebsites">
         <Icon :src="trash" :alt="'trash-icon'" @click="store.deleteWebsite({ id: website.id })" class="cursor-pointer" />
       </template>
     </div>
-  </form>
+  </LayoutForm>
   <footer class="w-full h-12 flex flex-grow items-end">
     <nav class="w-full flex items-center justify-between">
       <button @click="store.createWebsite">agregar enlace</button>
@@ -24,6 +24,7 @@ import { storeToRefs } from 'pinia'
 import { useWebsite } from '@/stores/websites'
 import trash from '@/assets/icons/delete.svg'
 import Icon from '../Icon/Icon.vue'
+import LayoutForm from '@/layouts/LayoutForm.vue'
 import BaseInput from '../Input/BaseInput.vue'
 import BaseButtonLink from '../Button/BaseButtonLink.vue'
 
@@ -32,7 +33,8 @@ export default defineComponent({
   components: {
     BaseInput,
     BaseButtonLink,
-    Icon
+    Icon,
+    LayoutForm
   },
   setup () {
     const store = useWebsite()
