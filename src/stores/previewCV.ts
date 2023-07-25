@@ -23,7 +23,10 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
   const pdfFile: Ref<string | null> = ref(null)
 
   watch([personalInformation, websites, professionalProfile, education, experience], () => {
-    void renderPDF()
+    loading.value = true
+    setTimeout(() => {
+      void renderPDF()
+    }, 2000)
   }, { deep: true })
 
   async function renderPDF (): Promise<void> {
