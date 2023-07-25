@@ -1,7 +1,9 @@
 <template>
-  <transition name="scale" mode="out-in">
-    <router-view></router-view>
-  </transition>
+  <router-view v-slot="{ Component }">
+    <transition name="scale" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <style scoped>

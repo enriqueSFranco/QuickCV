@@ -1,18 +1,12 @@
 <template>
-  <div class="w-full h-screen text-slate-200">
-    <Navbar />
+  <div class="w-full h-screen text-slate-800">
     <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
-import Navbar from '../components/Navbar/Navbar.vue'
-
 export default {
-  name: 'Layout',
-  components: {
-    Navbar
-  }
+  name: 'Layout'
 }
 </script>
 
