@@ -5,6 +5,7 @@ export interface SectionCv {
   title: string
   summary: string
   href: string
+  isComplete: boolean
 }
 
 // FORMULARIO [INFORMACION PERSONAL]
