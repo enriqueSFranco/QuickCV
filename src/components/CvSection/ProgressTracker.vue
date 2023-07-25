@@ -11,7 +11,7 @@
       </nav>
     </header>
     <ul class="grid grid-cols-1 divide-y divide-slate-300">
-      <li v-for="cvSection of cvSections" :key="cvSection.id">
+      <li v-for="cvSection of data" :key="cvSection.id">
         <router-link :to="{ name: cvSection.href }">
           <CvSection :payload="cvSection" />
         </router-link>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import data from '@/api/data.json'
+import { usePersonalInformation, useProfessinalProfile } from '@/stores'
 import CvSection from './CvSection.vue';
 import arrowLeft from '@/assets/icons/arrow-left.svg'
 
@@ -36,8 +36,53 @@ export default defineComponent({
     CvSection
   },
   setup () {
-    const cvSections = data.cv_sections
-    return { cvSections, arrowLeft }
+    const personalInformation = usePersonalInformation()
+    const professionalProfile = useProfessinalProfile()
+    const data = [
+      {
+        id: 0,
+        title: 'Información personal',
+        summary: 'Incluye tu nombre completo, información de contacto (teléfono, correo electrónico) y, opcionalmente, tu dirección.',
+        href: 'personal-information',
+        isComplete: !personalInformation.isComplete
+      },
+      {
+        id: 1,
+        title: 'Formas de contacto',
+        summary: 'Un breve párrafo que resume tus habilidades, experiencia y objetivos profesionales.',
+        href: 'contact-forms',
+        isComplete: false
+      },
+      {
+        id: 2,
+        title: 'Educación',
+        summary: 'Enumera tus grados académicos, instituciones educativas y fechas de obtención. Incluye honores académicos relevantes si los tienes.',
+        href: 'education',
+        isComplete: false
+      },
+      {
+        id: 3,
+        title: 'Perfil profesional',
+        summary: 'Un breve párrafo que resume tus habilidades, experiencia y objetivos profesionales.',
+        href: 'professional-profile',
+        isComplete: professionalProfile.isComplete
+      },
+      {
+        id: 4,
+        title: 'Experiencia laboral',
+        summary: 'Enumera tus empleos anteriores en orden cronológico inverso, incluyendo el nombre de la empresa, tu título o puesto, las fechas de empleo y las responsabilidades y logros relevantes.',
+        href: 'experience',
+        isComplete: false
+      },
+      {
+        id: 5,
+        title: 'Habilidades',
+        summary: 'Enumera tus habilidades relevantes, como conocimientos técnicos, competencias lingüísticas, habilidades informáticas, etc.',
+        href: 'knowledge',
+        isComplete: false
+      }
+    ]
+    return { data, arrowLeft }
   }
 })
-</script>
+</script>@/api/data
