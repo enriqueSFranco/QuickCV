@@ -12,6 +12,12 @@ const getSettings = (): ProfessionalProfile => {
 
 export const useProfessinalProfile = defineStore(STORE_NAME.PROFESSIONAL_PROFILE, {
   state: () => ({ formData: getSettings() }),
+  getters: {
+    isComplete (state) {
+      const field = state.formData.summary
+      return field.trim()
+    }
+  },
   actions: {
     updateForm ({ summary }: ProfessionalProfile) {
       this.formData = {
