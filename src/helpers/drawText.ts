@@ -32,6 +32,9 @@ export function splitTextIntoLines ({ ctx, txt, maxWidth }: { ctx: CanvasRenderi
     }
   }
   lines.push(currentLine)
-  console.log(lines)
   return lines
+}
+
+export function calculateWidthTetx ({ ctx, txt }: { ctx: CanvasRenderingContext2D, txt: string }): number {
+  return ctx.measureText(txt).width
 }
