@@ -1,18 +1,27 @@
 <template>
-  <LayoutForm>
-    <div v-for="website of formData" :key="website.id" class="w-full h-full flex items-center justify-between">
-      <BaseInput type="text" :placeholder="'https://github.com/enriqueSFranco'" :label="'Enlace'" v-model="website.url" />
-      <template v-if="hasMultipleWebsites">
-        <Icon :src="trash" :alt="'trash-icon'" @click="store.deleteWebsite({ id: website.id })" class="cursor-pointer" />
-      </template>
-    </div>
-  </LayoutForm>
-  <footer class="w-full h-12 flex flex-grow items-end">
+  <div v-for="website of formData" :key="website.id" class="w-full h-full grid place-items-center">
+    <LayoutForm>
+      <header class="w-full">
+        <template v-if="hasMultipleWebsites">
+          <Icon :src="trash" :alt="'trash-icon'" @click="store.deleteWebsite({ id: website.id })"
+            class="cursor-pointer" />
+        </template>
+      </header>
+      <div class="w-full h-full flex items-center justify-between gap-4">
+        <BaseInput type="text" :placeholder="'Github'" :label="'tipo'" />
+        <BaseInput type="text" :placeholder="'https://github.com/enriqueSFranco'" :label="'Enlace'"
+          v-model="website.url" />
+      </div>
+    </LayoutForm>
+  </div>
+  <footer class="w-full flex flex-grow items-end">
     <nav class="w-full flex items-center justify-between">
       <button @click="store.createWebsite">agregar enlace</button>
-      <div class="grid grid-cols-2">
-        <router-link :to="{ name: 'builder' }">volver</router-link>
-        <router-link :to="{ name: 'professional-profile' }">siguiente</router-link>
+      <div class="grid grid-cols-2 gap-4">
+        <router-link :to="{ name: 'builder' }"
+          class="shadow-lg outline outline-slate-200 text-slate-950 w-28 p-3 rounded-lg grid place-items-center capitalize">volver</router-link>
+        <router-link :to="{ name: 'professional-profile' }"
+          class="shadow-lg bg-slate-800 text-slate-200 w-28 px-3 py-2 rounded-lg grid place-items-center capitalize">siguiente</router-link>
       </div>
     </nav>
   </footer>
