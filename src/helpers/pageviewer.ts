@@ -13,7 +13,7 @@ function renderHeader ({ ctx }: { ctx: CanvasRenderingContext2D }): void {
   // implemntar la función para renderizar el header del cv
 }
 
-export function pageviewer (pdfUrl: string, data: Data, onRender): void {
+export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): void {
   const { personalInformation, websites, professionalProfile, education } = data
   const scale = 0.8
   const pdfFile = pdfjs.getDocument({ data: pdfUrl })
@@ -93,7 +93,7 @@ export function pageviewer (pdfUrl: string, data: Data, onRender): void {
 
             height = lineHeight + 35
             // PERFIL PROFESIONAL
-            drawText({ ctx: context, font: fontTitle, text: 'Perfil Profesional', x, y: height })
+            const professionalProfileHeight = drawText({ ctx: context, font: fontTitle, text: 'Perfil Profesional', x, y: height })
             const lines = splitTextIntoLines({ ctx: context, txt: professionalProfile.summary, maxWidth: canvas.width + 140 })
             let professionalProfilePosY = height + 40
             // let lineHeightCurrent = context.measureText(lines[0]).width
@@ -108,9 +108,28 @@ export function pageviewer (pdfUrl: string, data: Data, onRender): void {
               })
               professionalProfilePosY += 40
             }
+            height = professionalProfileHeight + professionalProfilePosY
+            // EXPERIENCIA
+            const experienceHeight = drawText({
+              ctx: context,
+              font: fontTitle,
+              text: 'Experiencia Laboral',
+              x,
+              y: height
+            })
+
+            // HABILIDADES
+            height += experienceHeight + 35
+            drawText({
+              ctx: context,
+              font: fontTitle,
+              text: 'Habilidades',
+              x,
+              y: height
+            })
           })
         }
       }
     })
-  })
+  }).then(onRender)
 }
