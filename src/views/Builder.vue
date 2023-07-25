@@ -2,11 +2,9 @@
   <Layout>
     <section class="w-full h-full flex items-center justify-center">
       <article class="w-full h-full bg-slate-50 overflow-y-scroll flex flex-col items-center gap-4 p-4">
-        <router-view v-slot="{ Component, route }">
+        <router-view v-slot="{ Component }">
           <transition name="scale" mode="out-in">
-            <div :key="route.name">
-              <component :is="Component" />
-            </div>
+            <component :is="Component" />
           </transition>
         </router-view>
       </article>

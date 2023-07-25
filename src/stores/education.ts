@@ -37,7 +37,6 @@ export const useEducation = defineStore(STORE_NAME.EDUCATION, {
       this.formData.push(newForm)
     },
     deleteForm (formId: Id) {
-      console.log('delete')
       const forms = this.formData
       const newForms = forms.filter(form => form.id !== formId)
       this.formData = newForms
