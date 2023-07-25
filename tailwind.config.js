@@ -5,7 +5,23 @@ export default {
     "./src/**/*.{js,vue,ts}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        progress: {
+          '0%': {
+            left: 0,
+            transform: 'translateX(-100%)'
+          },
+          ' 100%': {
+            left: '100%',
+            transform: 'translateX(0%)'
+          }
+        }
+      },
+      animation: {
+        'progress': 'progress 2s linear infinite'
+      }
+    },
   },
   plugins: [],
 }
