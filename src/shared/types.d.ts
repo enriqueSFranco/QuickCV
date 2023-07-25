@@ -35,6 +35,15 @@ export interface Education {
   dateEnd: string
 }
 
+export interface Experience {
+  id: Id
+  company: string
+  job: string
+  dateInit: string
+  dateEnd: string
+  details: string
+}
+
 export interface Skill {
   id: Id
   skill: string
