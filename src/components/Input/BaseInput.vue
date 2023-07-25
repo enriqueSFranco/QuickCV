@@ -1,5 +1,5 @@
 <template>
-  <label v-if="label" class="w-full h-full flex flex-col gap-2">
+  <label v-if="label" class="w-full flex flex-col gap-2">
     <span>{{ label }}</span>
     <input v-bind="$attrs" :placeholder="placeholder" :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"

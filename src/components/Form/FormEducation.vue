@@ -1,16 +1,14 @@
 <template>
-  <div v-for="(form, idx) of formData" :key="form.id" class="w-full h-full divide-y divide-slate-800">
+  <div v-for="(form, idx) of formData" :key="form.id" class="w-full">
     <LayoutForm>
       <header class="w-full flex items-center justify-between text-sm font-bold">
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
           <span class="w-9 h-9 bg-slate-800 grid place-items-center rounded-full text-slate-50">{{ idx + 1 }}</span>
           <h2>{{ hasTitle(form.id) }}</h2>
         </div>
-        <nav v-if="hasMultipleForms">
-          <button @click="educationStore.deleteForm(form.id)">
-            <Icon :src="deleteIcon" :alt="'delete icon'" />
-          </button>
-        </nav>
+        <button v-if="hasMultipleForms" @click="educationStore.deleteForm(form.id)">
+          <Icon :src="deleteIcon" :alt="'delete icon'" />
+        </button>
       </header>
       <BaseInput :label="'Escuela'" :placeholder="'Escuela Superior de Computo'" v-model="form.school" />
       <BaseInput :label="'Carrera'" :placeholder="'Ingenieria en Sistemas Computacionales'" v-model="form.degree" />
@@ -65,7 +63,7 @@ export default defineComponent({
       const forms = educationStore.formData
       const formIdx = forms.findIndex(form => form.id === formId)
       const hasSchool = forms[formIdx].school
-      return hasSchool.length === 0 ? 'No especificado' : forms[formIdx].school
+      return !hasSchool.trim() ? 'No especificado' : forms[formIdx].school
     })
 
     educationStore.updateForm()

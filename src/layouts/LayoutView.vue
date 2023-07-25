@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col justify-center items-center gap-8">
+  <div class="w-[600px] flex flex-col justify-center items-center gap-8">
     <header class="w-full flex flex-col gap-2">
       <div class="flex items-center gap-2">
         <div v-if="icon?.length > 0" class="bg-orange-100 rounded-lg p-1.5 grid place-items-center">
