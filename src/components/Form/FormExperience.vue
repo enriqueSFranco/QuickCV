@@ -11,12 +11,17 @@
   </LayoutForm>
   <footer class="w-full h-12 flex flex-grow items-end">
     <nav class="w-full flex items-center justify-between">
-      <button class="flex items-center justify-between gap-2 px-4 py-3 bg-slate-800 rounded-lg">
-        <Icon :src="addIcon" :alt="'add icon'" />Agregar experiencia
-      </button>
-      <div class="grid grid-cols-2">
-        <router-link :to="{ name: 'builder' }">volver</router-link>
-        <router-link :to="{ name: 'education' }">siguiente</router-link>
+      <div class="flex items-center gap-2">
+        <button class="flex items-center justify-between gap-2 p-2 bg-orange-400 rounded-full">
+          <Icon :src="addIcon" :alt="'add icon'" />
+        </button>
+        <span class="font-light text-gray-500">Agregar experiencia</span>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <router-link :to="{ name: 'builder' }"
+          class="shadow-lg outline outline-slate-200 text-slate-950 w-28 p-3 rounded-lg grid place-items-center capitalize">volver</router-link>
+        <router-link :to="{ name: 'education' }"
+          class="shadow-lg bg-slate-800 text-slate-200 w-28 px-3 py-2 rounded-lg grid place-items-center capitalize">siguiente</router-link>
       </div>
     </nav>
   </footer>
