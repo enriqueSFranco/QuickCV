@@ -1,20 +1,22 @@
 <template>
-  <div v-for="(form, idx) of formData" :key="form.id" class="w-full">
-    <LayoutForm>
-      <header class="w-full flex items-center justify-between text-sm font-bold">
-        <div class="w-full flex items-center gap-4">
-          <span class="w-9 h-9 bg-slate-800 text-slate-50 grid place-items-center rounded-full">{{ idx + 1 }}</span>
-          <h2>{{ hasTitle(form.id) }}</h2>
-        </div>
-        <template v-if="hasMultipleForms">
-          <button @click="skillsStore.deleteSkill({ id: form.id })">
-            <Icon :src="deleteIcon" :alt="'delete icon'" />
-          </button>
-        </template>
-      </header>
-      <BaseInput type="text" :placeholder="'typescript'" :label="'Enlace'" v-model="form.skill" />
-    </LayoutForm>
-  </div>
+  <TransitionGroup name="fade" tag="ul" class="w-full relative flex flex-col gap-6">
+    <li v-for="(form, idx) of formData" :key="form.id">
+      <LayoutForm>
+        <header class="w-full flex items-center justify-between text-sm font-bold">
+          <div class="w-full flex items-center gap-4">
+            <span class="w-9 h-9 bg-slate-800 text-slate-50 grid place-items-center rounded-full">{{ idx + 1 }}</span>
+            <h2>{{ hasTitle(form.id) }}</h2>
+          </div>
+          <template v-if="hasMultipleForms">
+            <button type="button" @click="skillsStore.deleteSkill({ id: form.id })">
+              <Icon :src="deleteIcon" :alt="'delete icon'" />
+            </button>
+          </template>
+        </header>
+        <BaseInput type="text" :placeholder="'typescript'" :label="'Habilidad'" v-model="form.skill" />
+      </LayoutForm>
+    </li>
+  </TransitionGroup>
   <footer class="w-full h-12 flex flex-grow items-end">
     <nav class="w-full flex items-center justify-between">
       <div class="flex items-center gap-2">
@@ -52,12 +54,13 @@ export default defineComponent({
     const skillsStore = useSkills()
     const { formData, hasMultipleForms } = storeToRefs(skillsStore)
 
+
     const hasTitle = computed(() => (formId: Id) => {
-      const forms = formData.value
-      const formIdx = forms.findIndex(form => form.id === formId)
-      const form = forms[formIdx]
-      return form.skill.length === 0 ? 'No especificado' : form.skill
+      const formIdx = formData.value.findIndex(form => form.id === formId)
+      const form = formData.value[formIdx]
+      return !form.skill.trim() ? 'No especificada' : form.skill
     })
+    skillsStore.updateForm()
 
     return { skillsStore, formData, hasTitle, hasMultipleForms, deleteIcon, addIcon }
   }
