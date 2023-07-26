@@ -1,23 +1,25 @@
 <template>
-  <div v-for="(form, idx) of formData" :key="form.id" class="w-full">
-    <LayoutForm>
-      <header class="w-full flex items-center justify-between text-sm font-bold">
-        <div class="flex items-center gap-2">
-          <span class="w-9 h-9 bg-slate-800 grid place-items-center rounded-full text-slate-50">{{ idx + 1 }}</span>
-          <h2>{{ hasTitle(form.id) }}</h2>
+  <TransitionGroup name="fade" tag="ul" class="w-full relative flex flex-col gap-6">
+    <li v-for="(form, idx) of formData" :key="form.id" class="w-full">
+      <LayoutForm>
+        <header class="w-full flex items-center justify-between text-sm font-bold">
+          <div class="flex items-center gap-2">
+            <span class="w-9 h-9 bg-slate-800 grid place-items-center rounded-full text-slate-50">{{ idx + 1 }}</span>
+            <h2>{{ hasTitle(form.id) }}</h2>
+          </div>
+          <button v-if="hasMultipleForms" @click="educationStore.deleteForm(form.id)">
+            <Icon :src="deleteIcon" :alt="'delete icon'" />
+          </button>
+        </header>
+        <BaseInput :label="'Escuela'" :placeholder="'Escuela Superior de Computo'" v-model="form.school" />
+        <BaseInput :label="'Carrera'" :placeholder="'Ingenieria en Sistemas Computacionales'" v-model="form.degree" />
+        <div class="w-full flex justify-between items-center gap-4">
+          <BaseInput :label="'Fecha de ingreso'" :placeholder="'2017'" v-model="form.dateInit" />
+          <BaseInput :label="'Fecha de egreso'" :placeholder="'2022'" v-model="form.dateEnd" />
         </div>
-        <button v-if="hasMultipleForms" @click="educationStore.deleteForm(form.id)">
-          <Icon :src="deleteIcon" :alt="'delete icon'" />
-        </button>
-      </header>
-      <BaseInput :label="'Escuela'" :placeholder="'Escuela Superior de Computo'" v-model="form.school" />
-      <BaseInput :label="'Carrera'" :placeholder="'Ingenieria en Sistemas Computacionales'" v-model="form.degree" />
-      <div class="w-full flex justify-between items-center gap-4">
-        <BaseInput :label="'Fecha de ingreso'" :placeholder="'2017'" v-model="form.dateInit" />
-        <BaseInput :label="'Fecha de egreso'" :placeholder="'2022'" v-model="form.dateEnd" />
-      </div>
-    </LayoutForm>
-  </div>
+      </LayoutForm>
+    </li>
+  </TransitionGroup>
   <footer class="w-full h-12 flex flex-grow items-end">
     <nav class="w-full flex items-center justify-between">
       <div class="flex items-center gap-2">

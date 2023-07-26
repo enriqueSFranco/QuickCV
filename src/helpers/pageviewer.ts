@@ -1,6 +1,11 @@
 import type { ProfessionalProfile, PersonalInformation, Website, Education } from '@/shared/types.d'
-import { drawText, splitTextIntoLines, calculateWidthTetx } from './drawText'
-import { pdfjs } from './pdfjs'
+import { drawText, splitTextIntoLines, calculateWidthTetx, pdfjs } from '@/helpers'
+import { FONTS, COORDINATES } from '@/shared/constants.d'
+
+const SETTINGS = {
+  SCALE: 0.8,
+  PAGE_TO_VIEW: 1
+}
 
 interface Data {
   personalInformation: PersonalInformation
@@ -9,16 +14,27 @@ interface Data {
   education: Education[]
 }
 
-function renderHeader ({ ctx }: { ctx: CanvasRenderingContext2D }): void {
-  // implemntar la función para renderizar el header del cv
+function renderPersonalInformation ({ ctx, personalInformation }: { ctx: CanvasRenderingContext2D, personalInformation: PersonalInformation }): number {
+  let totalLineHeght = 0
+  const fullnameHeight = drawText({ ctx, font: FONTS.fontTitle, text: `${personalInformation.name} ${personalInformation.lastName}`, x: COORDINATES.x, y: 50 })
+  const jobHeight = drawText({ ctx, font: FONTS.fontSubtitle, text: `${personalInformation.job}`, colorText: '#6a7c97', x: COORDINATES.x, y: 85 })
+  const emailHeight = drawText({ ctx, font: FONTS.fontText, text: `${personalInformation.email}`, x: COORDINATES.x, y: 120 })
+  totalLineHeght += fullnameHeight + jobHeight + emailHeight
+  return totalLineHeght
 }
+
+// function renderWebsites({ ctx, positionY, websites }: { ctx: CanvasRenderingContext2D, positionY: number, websites: Website[] }): number {
+//   let lineHeight = 0
+//   let posX = calculateWidthTetx({ ctx, txt: personalInformation.email }) // ancho del texto email
+//   return lineHeight
+// }
 
 export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): void {
   const { personalInformation, websites, professionalProfile, education } = data
-  const scale = 0.8
+  const scale = SETTINGS.SCALE
   const pdfFile = pdfjs.getDocument({ data: pdfUrl })
   void pdfFile.promise.then((pdf) => {
-    void pdf.getPage(1).then(page => {
+    void pdf.getPage(SETTINGS.PAGE_TO_VIEW).then(page => {
       const viewport = page.getViewport({ scale })
       const outputScale = window.devicePixelRatio ?? 1
 
@@ -36,17 +52,13 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
             canvasContext: context,
             viewport
           }
+
           void page.render(renderContext).promise.then(() => {
-            // TODO: falta implementar el loading
-            // CONSTANTES
             context.fillStyle = '#000' // Color del texto
-            const x = 20 // posición inicial en el ejeX de los elementos dentro del canva
-            const fontTitle = 'bold 30px Arial'
+            let lineHeightPersonalIfo = 0
 
             // INFORMACION PERSONAL
-            const fullnameHeight = drawText({ ctx: context, font: fontTitle, text: `${personalInformation.name} ${personalInformation.lastName}`, x: 20, y: 50 })
-            const jobHeight = drawText({ ctx: context, font: 'bold 26px Arial', text: `${personalInformation.job}`, colorText: '#6a7c97', x, y: 85 })
-            const emailHeight = drawText({ ctx: context, font: '26px Arial', text: `${personalInformation.email}`, x, y: 120 })
+            lineHeightPersonalIfo = renderPersonalInformation({ ctx: context, personalInformation })
 
             // WEBSITES
             const initialY = 120 // posición del elemento email en el ejeY en el canva
@@ -63,29 +75,26 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
               })
               posX += urlWitdth + 30
             }
-            let height = fullnameHeight + jobHeight + emailHeight + 150 // ancho del header
+            let height = lineHeightPersonalIfo + 150 // ancho del header
 
             // EDUCACIÓN
-            const educationTitleHeight = drawText({ ctx: context, font: fontTitle, text: 'Educación', x, y: height })
+            const educationTitleHeight = drawText({ ctx: context, font: FONTS.fontTitle, text: 'Educación', x: COORDINATES.x, y: height })
             let lineHeight = height + educationTitleHeight + 20
             for (const it of education) {
               const { school, degree, dateInit, dateEnd } = it
-              // const schoolHeight = calculateWidthTetx({ ctx: context, txt: school })
-              // const degreeHeight = calculateWidthTetx({ ctx: context, txt: degree })
-              // const totalLineHeght = schoolHeight + degreeHeight
               const schoolHeight = drawText({
                 ctx: context,
-                font: '26px Arial',
+                font: FONTS.fontText,
                 colorText: '#6a7c97',
                 text: `${school}`,
-                x,
+                x: COORDINATES.x,
                 y: lineHeight
               })
               const degreeHeight = drawText({
                 ctx: context,
                 font: 'italic 26px Arial',
                 text: `${degree} | ${dateInit} - ${dateEnd}`,
-                x,
+                x: COORDINATES.x,
                 y: lineHeight + 35
               })
               lineHeight += schoolHeight + degreeHeight + 35
@@ -93,7 +102,7 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
 
             height = lineHeight + 35
             // PERFIL PROFESIONAL
-            const professionalProfileHeight = drawText({ ctx: context, font: fontTitle, text: 'Perfil Profesional', x, y: height })
+            const professionalProfileHeight = drawText({ ctx: context, font: FONTS.fontTitle, text: 'Perfil Profesional', x: COORDINATES.x, y: height })
             const lines = splitTextIntoLines({ ctx: context, txt: professionalProfile.summary, maxWidth: canvas.width + 140 })
             let professionalProfilePosY = height + 40
             // let lineHeightCurrent = context.measureText(lines[0]).width
@@ -101,20 +110,21 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
               const currentLine = lines[i]
               drawText({
                 ctx: context,
-                font: '26px Arial',
+                font: FONTS.fontText,
                 text: `${currentLine}`,
-                x,
+                x: COORDINATES.x,
                 y: professionalProfilePosY
               })
               professionalProfilePosY += 40
             }
             height = professionalProfileHeight + professionalProfilePosY
+
             // EXPERIENCIA
             const experienceHeight = drawText({
               ctx: context,
-              font: fontTitle,
+              font: FONTS.fontTitle,
               text: 'Experiencia Laboral',
-              x,
+              x: COORDINATES.x,
               y: height
             })
 
@@ -122,9 +132,9 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
             height += experienceHeight + 35
             drawText({
               ctx: context,
-              font: fontTitle,
+              font: FONTS.fontTitle,
               text: 'Habilidades',
-              x,
+              x: COORDINATES.x,
               y: height
             })
           })

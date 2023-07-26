@@ -1,8 +1,11 @@
 <template>
-  <section class="w-full h-full bg-slate-100 flex flex-col items-center gap-4 p-4">
-    <Loader v-if="loading" :text="'cargando vista previa'" />
-    <canvas v-else id="the-canvas" class="shadow-lg rounded w-full h-full"> </canvas>
-    <!-- TODO: implementar <button>hola</button> -->
+  <section class="w-full h-full bg-gray-200 flex flex-col items-center gap-4 p-4">
+    <transition>
+      <canvas v-show="!loading" id="the-canvas" class="shadow-lg rounded"> </canvas>
+    </transition>
+    <transition>
+      <Loader v-show="loading" :text="'cargando vista previa'" />
+    </transition>
     <footer class="w-full flex flex-grow items-end justify-center">
       <button class="bg-slate-800 text-slate-50 rounded-full font-medium p-4">Descargar curriculum</button>
     </footer>
@@ -21,9 +24,11 @@ export default defineComponent({
   setup () {
     const previewCV = usePreviewCurriculum()
     const { loading } = storeToRefs(previewCV)
+
     onMounted(async () => {
       previewCV.renderPDF()
     })
+
     return { loading }
   }
 })

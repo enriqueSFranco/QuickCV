@@ -1,7 +1,6 @@
+import { watch } from 'vue'
 import { defineStore } from 'pinia'
-import { STORE_NAME, type Skill } from '@/shared/types.d'
-
-type SkillId = Pick<Skill, 'id'>
+import { STORE_NAME, type Skill, type Id } from '@/shared/types.d'
 
 const getDefaultSettings = (): Skill[] => ([{
   id: crypto.randomUUID(),
@@ -32,10 +31,15 @@ export const useSkills = defineStore(STORE_NAME.SKILLS, {
       const skills = this.formData
       skills.push(newSkill)
     },
-    deleteSkill ({ id }: SkillId) {
-      let skills = this.formData
+    deleteSkill ({ id }: { id: Id }) {
+      const skills = this.formData
       const newSkills = skills.filter(skill => skill.id !== id)
-      skills = newSkills
+      this.formData = newSkills
+    },
+    updateForm () {
+      watch(this.formData, (state) => {
+        window.localStorage.setItem(STORE_NAME.SKILLS, JSON.stringify(state))
+      })
     }
   }
 })
