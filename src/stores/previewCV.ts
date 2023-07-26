@@ -1,10 +1,13 @@
 import { watch, type Ref, ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import debounce from 'just-debounce-it'
 import { STORE_NAME } from '@/shared/types.d'
-import { usePersonalInformation, useProfessinalProfile, useWebsite } from '.'
+import { usePersonalInformation, useProfessinalProfile, useWebsite } from '@/stores'
 import { pageviewer } from '@/helpers/pageviewer'
 import { useEducation } from './education'
 import { useExperience } from './experience'
+
+const DEFAULT_URL = './default.pdf'
 
 export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, () => {
   const personalInformation = usePersonalInformation()
@@ -22,16 +25,15 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
   const loading: Ref<boolean> = ref(true)
   const pdfFile: Ref<string | null> = ref(null)
 
-  watch([personalInformation, websites, professionalProfile, education, experience], () => {
-    loading.value = true
-    setTimeout(() => {
-      void renderPDF()
-    }, 2000)
+  const debounceRenderPDF = debounce(renderPDF, 2000)
+
+  watch([data.personalInformation, data.websites, data.professionalProfile, data.education, data.experience], () => {
+    debounceRenderPDF()
   }, { deep: true })
 
   async function renderPDF (): Promise<void> {
     loading.value = true
-    const response = await fetch('./default.pdf')
+    const response = await fetch(DEFAULT_URL)
     pdfFile.value = await response.text()
     pageviewer(pdfFile.value, data, () => { loading.value = false })
   }
