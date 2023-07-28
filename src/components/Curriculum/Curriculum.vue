@@ -25,10 +25,9 @@ export default defineComponent({
     const previewCV = usePreviewCurriculum()
     const { loading } = storeToRefs(previewCV)
 
-    onMounted(async () => {
+    onMounted(() => {
       previewCV.renderPDF()
     })
-
     return { loading }
   }
 })

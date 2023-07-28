@@ -23,13 +23,7 @@ function renderPersonalInformation ({ ctx, personalInformation }: { ctx: CanvasR
   return totalLineHeght
 }
 
-// function renderWebsites({ ctx, positionY, websites }: { ctx: CanvasRenderingContext2D, positionY: number, websites: Website[] }): number {
-//   let lineHeight = 0
-//   let posX = calculateWidthTetx({ ctx, txt: personalInformation.email }) // ancho del texto email
-//   return lineHeight
-// }
-
-export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): void {
+export function pageviewer (pdfUrl: string, data: Data): void {
   const { personalInformation, websites, professionalProfile, education } = data
   const scale = SETTINGS.SCALE
   const pdfFile = pdfjs.getDocument({ data: pdfUrl })
@@ -53,7 +47,8 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
             viewport
           }
 
-          void page.render(renderContext).promise.then(() => {
+          const renderTask = page.render(renderContext)
+          void renderTask.promise.then(() => {
             context.fillStyle = '#000' // Color del texto
             let lineHeightPersonalIfo = 0
 
@@ -137,9 +132,13 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
               x: COORDINATES.x,
               y: height
             })
+          }).catch(error => {
+            if (error instanceof Error) {
+              console.log(error.message)
+            }
           })
         }
       }
     })
-  }).then(onRender)
+  })
 }
