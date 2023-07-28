@@ -39,7 +39,6 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
       const response = await fetch(DEFAULT_URL)
       pdfFile.value = await response.text()
       pageviewer(pdfFile.value, data)
-      loading.value = false
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.name)
