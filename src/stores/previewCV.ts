@@ -25,20 +25,13 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
   const loading: Ref<boolean> = ref(true)
   const pdfFile: Ref<string | null> = ref(null)
 
-  const debounceRenderPDF = debounce(() => {
-    void renderPDF()
-  }, 2000)
-
-  watch([data.personalInformation, data.websites, data.professionalProfile, data.education, data.experience], () => {
-    debounceRenderPDF()
-  })
-
   async function renderPDF (): Promise<void> {
     try {
       loading.value = true
       const response = await fetch(DEFAULT_URL)
+      console.log('se cargo porque hubo un cambio')
       pdfFile.value = await response.text()
-      pageviewer(pdfFile.value, data)
+      pageviewer(pdfFile.value, data, () => { loading.value = false })
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.name)
@@ -46,5 +39,9 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
     }
   }
 
-  return { loading, renderPDF }
+  watch([data.personalInformation, data.websites, data.professionalProfile, data.education, data.experience], () => { debounceRenderPDF() })
+
+  const debounceRenderPDF = debounce(renderPDF, 2000)
+
+  return { loading, debounceRenderPDF }
 })
