@@ -23,17 +23,13 @@ function renderPersonalInformation ({ ctx, personalInformation }: { ctx: CanvasR
   return totalLineHeght
 }
 
-// function renderWebsites({ ctx, positionY, websites }: { ctx: CanvasRenderingContext2D, positionY: number, websites: Website[] }): number {
-//   let lineHeight = 0
-//   let posX = calculateWidthTetx({ ctx, txt: personalInformation.email }) // ancho del texto email
-//   return lineHeight
-// }
-
 export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): void {
   const { personalInformation, websites, professionalProfile, education } = data
   const scale = SETTINGS.SCALE
   const pdfFile = pdfjs.getDocument({ data: pdfUrl })
+
   void pdfFile.promise.then((pdf) => {
+    // render page
     void pdf.getPage(SETTINGS.PAGE_TO_VIEW).then(page => {
       const viewport = page.getViewport({ scale })
       const outputScale = window.devicePixelRatio ?? 1
@@ -46,100 +42,113 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
           canvas.width = Math.floor(viewport.width * outputScale)
           canvas.height = Math.floor(viewport.height * outputScale)
           canvas.style.width = `${Math.floor(viewport.width)}px`
-          canvas.style.height = `${Math.floor(viewport.height)}px`
+          // canvas.style.height = `${Math.floor(viewport.height)}px`
 
           const renderContext = {
             canvasContext: context,
             viewport
           }
 
-          void page.render(renderContext).promise.then(() => {
+          const renderTask = page.render(renderContext)
+          void renderTask.promise.then(() => {
             context.fillStyle = '#000' // Color del texto
-            let lineHeightPersonalIfo = 0
+            let lineHeight = 0
 
-            // INFORMACION PERSONAL
-            lineHeightPersonalIfo = renderPersonalInformation({ ctx: context, personalInformation })
+            //  INFORMACION PERSONAL
+            lineHeight = renderPersonalInformation({ ctx: context, personalInformation })
+          }).then(() => { setTimeout(() => { onRender() }, 1000) })
+          // void renderTask.promise.then(() => {
+          //   context.fillStyle = '#000' // Color del texto
+          //   let lineHeightPersonalIfo = 0
 
-            // WEBSITES
-            const initialY = 120 // posición del elemento email en el ejeY en el canva
-            let posX = calculateWidthTetx({ ctx: context, txt: personalInformation.email }) // ancho del texto email
-            for (const website of websites) {
-              const { url } = website
-              const urlWitdth = calculateWidthTetx({ ctx: context, txt: url }) // ancho de cada url
-              drawText({
-                ctx: context,
-                text: url,
-                font: '26px Arial',
-                x: posX + 40,
-                y: initialY
-              })
-              posX += urlWitdth + 30
-            }
-            let height = lineHeightPersonalIfo + 150 // ancho del header
+          //   // INFORMACION PERSONAL
+          //   lineHeightPersonalIfo = renderPersonalInformation({ ctx: context, personalInformation })
 
-            // EDUCACIÓN
-            const educationTitleHeight = drawText({ ctx: context, font: FONTS.fontTitle, text: 'Educación', x: COORDINATES.x, y: height })
-            let lineHeight = height + educationTitleHeight + 20
-            for (const it of education) {
-              const { school, degree, dateInit, dateEnd } = it
-              const schoolHeight = drawText({
-                ctx: context,
-                font: FONTS.fontText,
-                colorText: '#6a7c97',
-                text: `${school}`,
-                x: COORDINATES.x,
-                y: lineHeight
-              })
-              const degreeHeight = drawText({
-                ctx: context,
-                font: 'italic 26px Arial',
-                text: `${degree} | ${dateInit} - ${dateEnd}`,
-                x: COORDINATES.x,
-                y: lineHeight + 35
-              })
-              lineHeight += schoolHeight + degreeHeight + 35
-            }
+          //   // WEBSITES
+          //   const initialY = 120 // posición del elemento email en el ejeY en el canva
+          //   let posX = calculateWidthTetx({ ctx: context, txt: personalInformation.email }) // ancho del texto email
+          //   for (const website of websites) {
+          //     const { url } = website
+          //     const urlWitdth = calculateWidthTetx({ ctx: context, txt: url }) // ancho de cada url
+          //     drawText({
+          //       ctx: context,
+          //       text: url,
+          //       font: '26px Arial',
+          //       x: posX + 40,
+          //       y: initialY
+          //     })
+          //     posX += urlWitdth + 30
+          //   }
+          //   let height = lineHeightPersonalIfo + 150 // ancho del header
 
-            height = lineHeight + 35
-            // PERFIL PROFESIONAL
-            const professionalProfileHeight = drawText({ ctx: context, font: FONTS.fontTitle, text: 'Perfil Profesional', x: COORDINATES.x, y: height })
-            const lines = splitTextIntoLines({ ctx: context, txt: professionalProfile.summary, maxWidth: canvas.width + 140 })
-            let professionalProfilePosY = height + 40
-            // let lineHeightCurrent = context.measureText(lines[0]).width
-            for (let i = 0; i < lines.length; i++) {
-              const currentLine = lines[i]
-              drawText({
-                ctx: context,
-                font: FONTS.fontText,
-                text: `${currentLine}`,
-                x: COORDINATES.x,
-                y: professionalProfilePosY
-              })
-              professionalProfilePosY += 40
-            }
-            height = professionalProfileHeight + professionalProfilePosY
+          //   // EDUCACIÓN
+          //   const educationTitleHeight = drawText({ ctx: context, font: FONTS.fontTitle, text: 'Educación', x: COORDINATES.x, y: height })
+          //   let lineHeight = height + educationTitleHeight + 20
+          //   for (const it of education) {
+          //     const { school, degree, dateInit, dateEnd } = it
+          //     const schoolHeight = drawText({
+          //       ctx: context,
+          //       font: FONTS.fontText,
+          //       colorText: '#6a7c97',
+          //       text: `${school}`,
+          //       x: COORDINATES.x,
+          //       y: lineHeight
+          //     })
+          //     const degreeHeight = drawText({
+          //       ctx: context,
+          //       font: 'italic 26px Arial',
+          //       text: `${degree} | ${dateInit} - ${dateEnd}`,
+          //       x: COORDINATES.x,
+          //       y: lineHeight + 35
+          //     })
+          //     lineHeight += schoolHeight + degreeHeight + 35
+          //   }
 
-            // EXPERIENCIA
-            const experienceHeight = drawText({
-              ctx: context,
-              font: FONTS.fontTitle,
-              text: 'Experiencia Laboral',
-              x: COORDINATES.x,
-              y: height
-            })
+          //   height = lineHeight + 35
+          //   // PERFIL PROFESIONAL
+          //   const professionalProfileHeight = drawText({ ctx: context, font: FONTS.fontTitle, text: 'Perfil Profesional', x: COORDINATES.x, y: height })
+          //   const lines = splitTextIntoLines({ ctx: context, txt: professionalProfile.summary, maxWidth: canvas.width + 140 })
+          //   let professionalProfilePosY = height + 40
+          //   // let lineHeightCurrent = context.measureText(lines[0]).width
+          //   for (let i = 0; i < lines.length; i++) {
+          //     const currentLine = lines[i]
+          //     drawText({
+          //       ctx: context,
+          //       font: FONTS.fontText,
+          //       text: `${currentLine}`,
+          //       x: COORDINATES.x,
+          //       y: professionalProfilePosY
+          //     })
+          //     professionalProfilePosY += 40
+          //   }
+          //   height = professionalProfileHeight + professionalProfilePosY
 
-            // HABILIDADES
-            height += experienceHeight + 35
-            drawText({
-              ctx: context,
-              font: FONTS.fontTitle,
-              text: 'Habilidades',
-              x: COORDINATES.x,
-              y: height
-            })
-          })
+          //   // EXPERIENCIA
+          //   const experienceHeight = drawText({
+          //     ctx: context,
+          //     font: FONTS.fontTitle,
+          //     text: 'Experiencia Laboral',
+          //     x: COORDINATES.x,
+          //     y: height
+          //   })
+
+          //   // HABILIDADES
+          //   height += experienceHeight + 35
+          //   drawText({
+          //     ctx: context,
+          //     font: FONTS.fontTitle,
+          //     text: 'Habilidades',
+          //     x: COORDINATES.x,
+          //     y: height
+          //   })
+          //   renderPage = false
+          // }).catch(error => {
+          //   if (error instanceof Error) {
+          //     console.log(error.message)
+          //   }
+          // })
         }
       }
     })
-  }).then(onRender)
+  })
 }

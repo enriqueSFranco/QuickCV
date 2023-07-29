@@ -1,7 +1,7 @@
 <template>
-  <section class="w-full h-full bg-gray-200 flex flex-col items-center gap-4 p-4">
+  <section class="w-full h-full bg-gray-200/50 flex flex-col items-center gap-4 p-4">
     <transition>
-      <canvas v-show="!loading" id="the-canvas" class="shadow-lg rounded"> </canvas>
+      <canvas v-show="!loading" id="the-canvas" class="shadow-lg bg-slate-50 rounded w-2/3 h-full"> </canvas>
     </transition>
     <transition>
       <Loader v-show="loading" :text="'cargando vista previa'" />
@@ -25,10 +25,9 @@ export default defineComponent({
     const previewCV = usePreviewCurriculum()
     const { loading } = storeToRefs(previewCV)
 
-    onMounted(async () => {
-      previewCV.renderPDF()
+    onMounted(() => {
+      previewCV.debounceRenderPDF()
     })
-
     return { loading }
   }
 })
