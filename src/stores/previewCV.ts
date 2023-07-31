@@ -2,10 +2,8 @@ import { watch, type Ref, ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import debounce from 'just-debounce-it'
 import { STORE_NAME } from '@/shared/types.d'
-import { usePersonalInformation, useProfessinalProfile, useWebsite } from '@/stores'
-import { pageviewer } from '@/helpers/pageviewer'
-import { useEducation } from './education'
-import { useExperience } from './experience'
+import { useEducation, useExperience, usePersonalInformation, useProfessinalProfile, useWebsite } from '@/stores'
+import { pageviewer, download } from '@/helpers'
 
 const DEFAULT_URL = './default.pdf'
 
@@ -29,7 +27,6 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
     try {
       loading.value = true
       const response = await fetch(DEFAULT_URL)
-      console.log('se cargo porque hubo un cambio')
       pdfFile.value = await response.text()
       pageviewer(pdfFile.value, data, () => { loading.value = false })
     } catch (error) {
@@ -39,9 +36,11 @@ export const usePreviewCurriculum = defineStore(STORE_NAME.PREVIEW_CURRICULUM, (
     }
   }
 
-  watch([data.personalInformation, data.websites, data.professionalProfile, data.education, data.experience], () => { debounceRenderPDF() })
+  const dowloadPDF = (): void => { download({ curriculumData: data }) }
 
   const debounceRenderPDF = debounce(renderPDF, 2000)
 
-  return { loading, debounceRenderPDF }
+  watch([data.personalInformation, data.websites, data.professionalProfile, data.education, data.experience], () => { debounceRenderPDF(); console.log('hay cambios') })
+
+  return { loading, debounceRenderPDF, dowloadPDF }
 })
