@@ -50,6 +50,10 @@ export interface Skill {
   skill: string
 }
 
+export interface CurriculumData {
+  personalInformation: PersonalInformation
+}
+
 // ENUMS
 export enum STORE_NAME {
   PERSONAL_INFORMATION = 'Personal_Information',
