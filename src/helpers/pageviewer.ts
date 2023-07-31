@@ -56,7 +56,8 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
 
             //  INFORMACION PERSONAL
             lineHeight = renderPersonalInformation({ ctx: context, personalInformation })
-          }).then(() => { setTimeout(() => { onRender() }, 1000) })
+            setTimeout(() => { onRender() }, 2000)
+          })
           // void renderTask.promise.then(() => {
           //   context.fillStyle = '#000' // Color del texto
           //   let lineHeightPersonalIfo = 0
