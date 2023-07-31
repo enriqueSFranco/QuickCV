@@ -1,4 +1,11 @@
-export function splitTextIntoLines ({ ctx, txt, maxWidth }: { ctx: CanvasRenderingContext2D, txt: string, maxWidth: number }): string[] {
+import { type SplitTextIntoLinesProps } from '@/shared/types.d'
+
+/**
+ * Divide un texto en líneas para que se ajuste a un ancho máximo en un contexto 2D de lienzo (CanvasRenderingContext2D).
+ * @param {SplitTextIntoLinesProps} props - Propiedades para dividir el texto en líneas.
+ * @returns {string[]} Un arreglo de líneas resultante después de dividir el texto.
+ */
+export function splitTextIntoLines ({ ctx, txt, maxWidth }: SplitTextIntoLinesProps): string[] {
   const words = txt.split(' ')
   let currentLine = words[0]
   const lines = []

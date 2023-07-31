@@ -3,7 +3,7 @@
     <div class="w-2/3 relative grid place-items-center">
       <h2 class="text-gray-900 font-light">{{ text }}</h2>
       <div
-        class="relative w-2/3 h-2 overflow-hidden after:absolute after: top-3 left-0 after:w-full after:h-2 after:rounded-lg after:bg-gray-900 after:animate-progress">
+        class="relative w-2/3 h-2 overflow-hidden after:absolute after: top-3 left-0 after:w-1/2 after:h-2 after:rounded-lg after:bg-gray-800 after:animate-progress">
       </div>
     </div>
   </div>
@@ -19,9 +19,6 @@ export default defineComponent({
       type: String,
       default: 'cargando contenido'
     }
-  },
-  setup () {
-
   }
 })
 </script>
