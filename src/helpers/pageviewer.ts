@@ -1,11 +1,12 @@
-import type { ProfessionalProfile, PersonalInformation, Website, Education } from '@/shared/types.d'
-import { drawText, splitTextIntoLines, calculateWidthTetx, pdfjs } from '@/helpers'
-import { FONTS, COORDINATES } from '@/shared/constants.d'
-
-const SETTINGS = {
-  SCALE: 0.8,
-  PAGE_TO_VIEW: 1
-}
+import { renderEducation, renderPersonalInformation, renderProfessionalProfile } from '@/helpers/render-cv-sections'
+import type {
+  ProfessionalProfile,
+  PersonalInformation,
+  Website,
+  Education
+} from '@/shared/types.d'
+import { FONTS, CONFIG_CANVAS } from '@/shared/constants.d'
+import { drawText, pdfjs } from '@/helpers'
 
 interface Data {
   personalInformation: PersonalInformation
@@ -14,23 +15,16 @@ interface Data {
   education: Education[]
 }
 
-function renderPersonalInformation ({ ctx, personalInformation }: { ctx: CanvasRenderingContext2D, personalInformation: PersonalInformation }): number {
-  let totalLineHeght = 0
-  const fullnameHeight = drawText({ ctx, font: FONTS.fontTitle, text: `${personalInformation.name} ${personalInformation.lastName}`, x: COORDINATES.x, y: 50 })
-  const jobHeight = drawText({ ctx, font: FONTS.fontSubtitle, text: `${personalInformation.job}`, colorText: '#6a7c97', x: COORDINATES.x, y: 85 })
-  const emailHeight = drawText({ ctx, font: FONTS.fontText, text: `${personalInformation.email}`, x: COORDINATES.x, y: 120 })
-  totalLineHeght += fullnameHeight + jobHeight + emailHeight
-  return totalLineHeght
-}
+const { COORDINATES, SIZE } = CONFIG_CANVAS
 
 export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): void {
   const { personalInformation, websites, professionalProfile, education } = data
-  const scale = SETTINGS.SCALE
+  const scale = SIZE.SCALE
   const pdfFile = pdfjs.getDocument({ data: pdfUrl })
 
   void pdfFile.promise.then((pdf) => {
     // render page
-    void pdf.getPage(SETTINGS.PAGE_TO_VIEW).then(page => {
+    void pdf.getPage(SIZE.PAGE_TO_VIEW).then(page => {
       const viewport = page.getViewport({ scale })
       const outputScale = window.devicePixelRatio ?? 1
 
@@ -52,10 +46,29 @@ export function pageviewer (pdfUrl: string, data: Data, onRender: () => void): v
           const renderTask = page.render(renderContext)
           void renderTask.promise.then(() => {
             context.fillStyle = '#000' // Color del texto
-            let lineHeight = 0
+            let lineHeight: number = 0
 
             //  INFORMACION PERSONAL
-            lineHeight = renderPersonalInformation({ ctx: context, personalInformation })
+            lineHeight += renderPersonalInformation({ ctx: context, personalInformation, currentLineHeght: lineHeight })
+
+            // EDUCACIÓN
+            lineHeight += 150
+            lineHeight += drawText({ ctx: context, font: FONTS.fontTitle, text: 'Educación', x: COORDINATES.x, y: lineHeight })
+            lineHeight = renderEducation({ ctx: context, education, currentLineHeght: lineHeight })
+            console.log(lineHeight)
+
+            // PERFILL PROFESIONAL
+            lineHeight += 35
+            drawText({
+              ctx: context,
+              text: 'Perfil Profesional',
+              font: FONTS.fontTitle,
+              x: COORDINATES.x,
+              y: lineHeight
+            })
+            lineHeight += renderProfessionalProfile({ canvasElement: canvas, ctx: context, professionalProfile, currentLineHeght: lineHeight })
+
+            // cargar despues de 2s
             setTimeout(() => { onRender() }, 2000)
           })
           // void renderTask.promise.then(() => {
