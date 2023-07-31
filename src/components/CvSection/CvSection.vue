@@ -4,13 +4,15 @@
       <h2 class="uppercase font-bold text-slate-950">{{ payload.title }}</h2>
       <p class="tracking-wide text-gray-500">{{ payload.summary }}</p>
     </div>
-    <img :src="arrowRight" alt="icon-arrow-right" />
+    <img v-if="!payload.isComplete" :src="arrowRightIcon" :alt="'icon-arrow-right'" />
+    <img v-else :src="checkIcon" :alt="'icon-check'" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import arrowRight from '@/assets/icons/arrow-right.svg'
+import arrowRightIcon from '@/assets/icons/arrow-right.svg'
+import checkIcon from '@/assets/icons/check.svg'
 import { SectionCv } from '@/shared/types.d'
 
 export default defineComponent({
@@ -22,7 +24,7 @@ export default defineComponent({
     }
   },
   setup () {
-    return { arrowRight }
+    return { arrowRightIcon, checkIcon }
   }
 })
 

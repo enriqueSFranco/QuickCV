@@ -1,31 +1,47 @@
 <template>
-  <section class="w-full h-full bg-slate-100 flex flex-col items-center p-4">
-    <template v-if="!loading">
-      <!-- TODO: implementar componente de carga -->
-      <div>cargando vista previa</div>
-    </template>
-    <canvas v-else id="the-canvas" class="shadow-lg rounded w-full h-full"> </canvas>
-    <button>hola</button>
+  <div class="w-full h-full bg-gray-200/50 flex flex-col items-center gap-4 p-4">
+    <transition name="fade">
+      <canvas v-show="!loading" id="the-canvas" class="shadow-lg rounded opacity-60 w-2/3 h-full z-10" />
+    </transition>
+    <transition name="fade">
+      <Loader v-show="loading" :text="'cargando vista previa'" />
+    </transition>
     <footer class="w-full flex flex-grow items-end justify-center">
-      <button class="bg-slate-800 text-slate-50 rounded-full font-medium p-4">Descargar curriculum</button>
+      <button class="bg-slate-800 text-slate-50 rounded-full font-medium p-4" @click="previewCV.dowloadPDF">Descargar
+        curriculum</button>
     </footer>
-  </section>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { usePreviewCurriculum } from '@/stores/previewCV'
+import Loader from '@/components/Loader/Loader.vue'
 
 export default defineComponent({
   name: 'Curriculum',
+  components: { Loader },
   setup () {
     const previewCV = usePreviewCurriculum()
     const { loading } = storeToRefs(previewCV)
-    onMounted(async () => {
-      previewCV.renderPDF()
+
+    onMounted(() => {
+      previewCV.debounceRenderPDF()
     })
-    return { loading }
+    return { previewCV, loading }
   }
 })
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
