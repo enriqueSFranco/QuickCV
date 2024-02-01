@@ -7,7 +7,8 @@
       <Loader v-show="loading" :text="'cargando vista previa'" />
     </transition>
     <footer class="w-full flex flex-grow items-end justify-center">
-      <button class="bg-slate-800 text-slate-50 rounded-full font-medium p-4" @click="previewCV.dowloadPDF">Descargar
+      <button class="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-slate-50 rounded-lg font-medium p-4"
+        @click="previewCV.dowloadPDF">Descargar
         curriculum</button>
     </footer>
   </div>
