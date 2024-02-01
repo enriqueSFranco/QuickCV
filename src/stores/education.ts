@@ -21,8 +21,15 @@ export const useEducation = defineStore(STORE_NAME.EDUCATION, {
   getters: {
     hasMultipleForms (state) {
       const { formData } = state
-      const { length } = formData
-      return length > 1
+      return formData.length > 1
+    },
+    isComplete (state): boolean { // TODO: implementar la funcion de verificación
+      const { formData } = state
+      const ans = formData.every(form => form.school.trim() === '')
+      console.log(ans)
+      return ans
+      // const isEmpty = (value: string): boolean => value.trim() === ''
+      // return formData.every(field => isEmpty(field.school) || isEmpty(field.degree) || isEmpty(field.dateInit) || isEmpty(field.dateEnd))
     }
   },
   actions: {
