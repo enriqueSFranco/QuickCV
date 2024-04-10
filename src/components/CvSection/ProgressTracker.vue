@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { usePersonalInformation, useProfessinalProfile } from '@/stores'
+import { useEducation, usePersonalInformation, useProfessinalProfile } from '@/stores'
 import CvSection from './CvSection.vue';
 import arrowLeft from '@/assets/icons/arrow-left.svg'
 
@@ -38,6 +38,7 @@ export default defineComponent({
   setup () {
     const personalInformation = usePersonalInformation()
     const professionalProfile = useProfessinalProfile()
+    const education = useEducation()
     const data = [
       {
         id: 0,
@@ -58,7 +59,7 @@ export default defineComponent({
         title: 'Educación',
         summary: 'Enumera tus grados académicos, instituciones educativas y fechas de obtención. Incluye honores académicos relevantes si los tienes.',
         href: 'education',
-        isComplete: false
+        isComplete: education.isComplete
       },
       {
         id: 3,
