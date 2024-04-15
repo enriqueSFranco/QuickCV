@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { usePreviewCurriculum } from '@/stores/previewCV'
+import { usePreviewCurriculum } from '@/stores/preview-cv'
 import Loader from '@/components/Loader/Loader.vue'
 
 export default defineComponent({

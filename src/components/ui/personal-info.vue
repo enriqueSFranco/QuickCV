@@ -25,7 +25,7 @@
 import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import LayoutForm from '@/layouts/LayoutForm.vue'
-import { usePersonalInformation } from '@/stores/personalInformation'
+import { usePersonalInformation } from '@/stores/personal-info'
 import BaseInput from '@/components/Input/BaseInput.vue'
 
 export default defineComponent({
@@ -37,7 +37,9 @@ export default defineComponent({
   setup () {
     const store = usePersonalInformation()
     const { formData } = storeToRefs(store)
-    store.updateForm({ name: formData.value.name, lastName: formData.value.lastName, job: formData.value.job, email: formData.value.email })
+    const { name, lastName, email, job } = formData.value
+
+    store.updateForm({ name, lastName, job, email })
     return { store }
   }
 })

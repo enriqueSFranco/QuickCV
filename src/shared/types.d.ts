@@ -1,3 +1,6 @@
+import { type z } from 'zod'
+import { type PersonalInformationSchema } from '@/schemas'
+
 type Id = `${string}-${string}-${string}-${string}-${string}`
 type CanvasContex = CanvasRenderingContext2D
 type HexadecimalColor = `#${string}`
@@ -11,15 +14,7 @@ export interface SectionCv {
 }
 
 // FORMULARIO [INFORMACION PERSONAL]
-export interface People {
-  name: string
-  lastName: string
-}
-
-export interface PersonalInformation extends People {
-  job: string
-  email: string
-}
+export type PersonalInfo = z.infer<typeof PersonalInformationSchema>
 
 export interface ProfessionalProfile {
   summary: string
