@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import FormContactForms from '@/components/Form/FormContactForms.vue'
+import FormContactForms from '@/components/Form/contact.vue'
 import iconContactForms from '@/assets/icons/linked.svg'
 import LayoutView from '@/layouts/LayoutView.vue'
 </script>

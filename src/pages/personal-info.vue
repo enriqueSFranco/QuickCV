@@ -6,6 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import FormPersonalInfo from '@/components/Form/FormPersonalInfo.vue'
+import FormPersonalInfo from '@/components/ui/personal-info.vue'
 import LayoutView from '@/layouts/LayoutView.vue'
 </script>

@@ -1,6 +1,7 @@
 <template>
   <LayoutForm>
-    <BaseInput type="text" name="name" :placeholder="'Carlos Enrique'" :label="'Nombre'" v-model="store.formData.name" />
+    <BaseInput type="text" name="name" :placeholder="'Carlos Enrique'" :label="'Nombre'"
+      v-model="store.formData.name" />
     <BaseInput type="text" name="lastName" :placeholder="'Salinas Franco'" :label="'Apellidos'"
       v-model="store.formData.lastName" />
     <BaseInput type="text" name="job" :placeholder="'Frontend Developer'" :label="'Puesto'"
@@ -24,7 +25,7 @@
 import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import LayoutForm from '@/layouts/LayoutForm.vue'
-import { usePersonalInformation } from '@/stores/personalInformation'
+import { usePersonalInformation } from '@/stores/personal-info'
 import BaseInput from '@/components/Input/BaseInput.vue'
 
 export default defineComponent({
@@ -36,7 +37,9 @@ export default defineComponent({
   setup () {
     const store = usePersonalInformation()
     const { formData } = storeToRefs(store)
-    store.updateForm({ name: formData.value.name, lastName: formData.value.lastName, job: formData.value.job, email: formData.value.email })
+    const { name, lastName, email, job } = formData.value
+
+    store.updateForm({ name, lastName, job, email })
     return { store }
   }
 })
