@@ -10,7 +10,7 @@
 import { defineComponent } from 'vue'
 import iconSkills from '@/assets/icons/einstein.svg'
 import LayoutView from '@/layouts/LayoutView.vue'
-import FormSkills from '@/components/Form/FormSkills.vue'
+import FormSkills from '@/components/ui/knowledge.vue'
 
 export default defineComponent({
   name: 'Skills',

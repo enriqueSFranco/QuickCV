@@ -18,7 +18,7 @@
 import { defineComponent } from 'vue'
 import LayoutForm from '@/layouts/LayoutForm.vue';
 import BaseTextArea from '../TextArea/BaseTextArea.vue'
-import { useProfessinalProfile } from '@/stores/professionalProfile';
+import { useProfessinalProfile } from '@/stores/professional-profile';
 
 export default defineComponent({
   name: 'FormProfessionalProfile',

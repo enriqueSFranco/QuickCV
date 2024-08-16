@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LayoutView from '@/layouts/LayoutView.vue'
-import FormEducation from '@/components/Form/FormEducation.vue'
+import FormEducation from '@/components/Form/education.vue'
 import educationIcon from '@/assets/icons/education.svg'
 
 export default defineComponent({

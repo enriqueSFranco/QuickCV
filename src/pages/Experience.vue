@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LayoutView from '@/layouts/LayoutView.vue'
-import FormExperience from '@/components/Form/FormExperience.vue'
+import FormExperience from '@/components/Form/experience.vue'
 
 export default defineComponent({
   name: 'Experience',

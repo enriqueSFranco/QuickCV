@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LayoutView from '@/layouts/LayoutView.vue'
-import FormProfessionalProfile from '@/components/Form/FormProfessionalProfile.vue';
+import FormProfessionalProfile from '@/components/Form/professional-profile.vue';
 
 export default defineComponent({
   name: 'ProfessionalProfile',

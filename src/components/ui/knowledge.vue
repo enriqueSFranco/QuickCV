@@ -39,7 +39,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useSkills } from '@/stores/skills'
+import { useSkills } from '@/stores/knowledge'
 import { Id } from '@/shared/types.d'
 import deleteIcon from '@/assets/icons/delete.svg'
 import addIcon from '@/assets/icons/add.svg'
