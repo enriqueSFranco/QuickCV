@@ -1,4 +1,4 @@
-import type { CurriculumData, Education, Website } from '@/shared/types.d'
+import type { CurriculumData, Education } from '@/shared/types.d'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 

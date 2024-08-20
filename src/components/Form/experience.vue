@@ -11,12 +11,12 @@
             <Icon :src="deleteIcon" :alt="'icon delete'" />
           </button>
         </header>
-        <BaseInput :label="'empresa'" :placeholder="'Sngular'" v-model="formExp.company" />
-        <BaseInput :label="'puesto'" :placeholder="'Sngular'" v-model="formExp.job" />
+        <TextField :label="'empresa'" :placeholder="'Sngular'" v-model="formExp.company" />
+        <TextField :label="'puesto'" :placeholder="'Sngular'" v-model="formExp.job" />
         <div class="w-full flex items-center justify-between gap-3">
-          <BaseInput :label="'fecha de inicio'" :placeholder="'04/2020'" v-model="formExp.dateInit" />
+          <TextField :label="'fecha de inicio'" :placeholder="'04/2020'" v-model="formExp.dateInit" />
           <Icon :src="arrowLeftIcon" :alt="'arrow-left icon'" />
-          <BaseInput :label="'fecha de finalización'" :placeholder="'10/22'" v-model="formExp.dateEnd" />
+          <TextField :label="'fecha de finalización'" :placeholder="'10/22'" v-model="formExp.dateEnd" />
         </div>
         <BaseTextArea :label="'mis responsabilidades fueron'" :placeholder="'coger con la secretaria'"
           v-model="formExp.details" />
@@ -50,13 +50,13 @@ import arrowLeftIcon from '@/assets/icons/arrow-right-large.svg'
 import addIcon from '@/assets/icons/add.svg'
 import deleteIcon from '@/assets/icons/delete.svg'
 import LayoutForm from '@/layouts/LayoutForm.vue'
-import BaseInput from '../Input/BaseInput.vue'
-import BaseTextArea from '../TextArea/BaseTextArea.vue'
-import Icon from '../Icon/Icon.vue'
+import TextField from '@/features/ui/atoms/TextField.vue'
+import TextArea from '@/features/ui/atoms/TextArea.vue'
+import Icon from '@/features/ui/atoms/Icon.vue'
 
 export default defineComponent({
   name: 'FormExperience',
-  components: { LayoutForm, BaseInput, BaseTextArea, Icon },
+  components: { LayoutForm, TextField, TextArea, Icon },
   setup () {
     const experienceStore = useExperience()
     const { hasMultipleForms } = storeToRefs(experienceStore)

@@ -1,3 +1,11 @@
+export interface SectionCv {
+  id: number
+  title: string
+  summary: string
+  href?: stirng
+  isComplete: boolean
+}
+
 export interface HeaderCv {
   name: string
   lastname: string

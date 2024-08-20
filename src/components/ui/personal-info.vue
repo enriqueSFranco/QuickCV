@@ -1,12 +1,12 @@
 <template>
   <LayoutForm>
-    <BaseInput type="text" name="name" :placeholder="'Carlos Enrique'" :label="'Nombre'"
+    <TextField type="text" name="name" :placeholder="'Carlos Enrique'" :label="'Nombre'"
       v-model="store.formData.name" />
-    <BaseInput type="text" name="lastName" :placeholder="'Salinas Franco'" :label="'Apellidos'"
+    <TextField type="text" name="lastName" :placeholder="'Salinas Franco'" :label="'Apellidos'"
       v-model="store.formData.lastName" />
-    <BaseInput type="text" name="job" :placeholder="'Frontend Developer'" :label="'Puesto'"
+    <TextField type="text" name="job" :placeholder="'Frontend Developer'" :label="'Puesto'"
       v-model="store.formData.job" />
-    <BaseInput type="email" name="email" :placeholder="'kike@gmail.com'" :label="'Correo electronico'"
+    <TextField type="email" name="email" :placeholder="'kike@gmail.com'" :label="'Correo electronico'"
       v-model="store.formData.email" />
   </LayoutForm>
   <footer class="w-full flex flex-grow items-end">
@@ -25,17 +25,17 @@
 import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import LayoutForm from '@/layouts/LayoutForm.vue'
-import { usePersonalInformation } from '@/stores/personal-info'
-import BaseInput from '@/components/Input/BaseInput.vue'
+import { usePersonalInfo } from '@/stores/personal-info'
+import TextField from '@/features/ui/atoms/TextField.vue'
 
 export default defineComponent({
   name: 'FormPersonalInfo',
   components: {
-    BaseInput,
+    TextField,
     LayoutForm
   },
   setup () {
-    const store = usePersonalInformation()
+    const store = usePersonalInfo()
     const { formData } = storeToRefs(store)
     const { name, lastName, email, job } = formData.value
 
