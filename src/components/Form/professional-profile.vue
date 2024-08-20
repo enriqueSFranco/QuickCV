@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LayoutForm from '@/layouts/LayoutForm.vue';
-import BaseTextArea from '../TextArea/BaseTextArea.vue'
+import BaseTextArea from '@/features/ui/atoms/TextArea.vue'
 import { useProfessinalProfile } from '@/stores/professional-profile';
 
 export default defineComponent({

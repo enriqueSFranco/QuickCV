@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Ref, ref } from 'vue'
-import Icon from '@/components/Icon/Icon.vue'
+import Icon from '@/features/ui/atoms/Icon.vue'
 import sun from '@/assets/icons/sun.svg'
 
 export default {

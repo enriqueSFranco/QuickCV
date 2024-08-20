@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '@/components/Icon/Icon.vue';
+import Icon from '@/features/ui/atoms/Icon.vue';
 
 export default defineComponent({
   name: 'LayoutView',

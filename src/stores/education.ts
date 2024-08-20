@@ -1,16 +1,17 @@
 import { watch } from 'vue'
 import { defineStore } from 'pinia'
-import { STORE_NAME, type Education, type Id } from '@/shared/types.d'
+import { type EducationCv } from '@/shared/models.d'
+import { STORE_NAME } from '@/shared/enums.d'
 
-const getDefaultSettings = (): Education[] => ([{
-  id: crypto.randomUUID(),
+const getDefaultSettings = (): EducationCv[] => ([{
+  id: 1,
   school: '',
   degree: '',
   dateInit: '',
   dateEnd: ''
 }])
 
-const getSettings = (): Education[] => {
+const getSettings = (): EducationCv[] => {
   const stored = window.localStorage.getItem(STORE_NAME.EDUCATION)
   if (stored != null) return JSON.parse(stored)
   return getDefaultSettings()
@@ -26,7 +27,6 @@ export const useEducation = defineStore(STORE_NAME.EDUCATION, {
     isComplete (state): boolean { // TODO: implementar la funcion de verificación
       const { formData } = state
       const ans = formData.every(form => form.school.trim() === '')
-      console.log(ans)
       return ans
       // const isEmpty = (value: string): boolean => value.trim() === ''
       // return formData.every(field => isEmpty(field.school) || isEmpty(field.degree) || isEmpty(field.dateInit) || isEmpty(field.dateEnd))
@@ -34,8 +34,8 @@ export const useEducation = defineStore(STORE_NAME.EDUCATION, {
   },
   actions: {
     createForm () {
-      const newForm: Education = {
-        id: crypto.randomUUID(),
+      const newForm: EducationCv = {
+        id: 1,
         school: '',
         degree: '',
         dateInit: '',
@@ -43,7 +43,7 @@ export const useEducation = defineStore(STORE_NAME.EDUCATION, {
       }
       this.formData.push(newForm)
     },
-    deleteForm (formId: Id) {
+    deleteForm (formId: string) {
       const forms = this.formData
       const newForms = forms.filter(form => form.id !== formId)
       this.formData = newForms

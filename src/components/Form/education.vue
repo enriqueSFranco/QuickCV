@@ -11,11 +11,11 @@
             <Icon :src="deleteIcon" :alt="'delete icon'" />
           </button>
         </header>
-        <BaseInput :label="'Escuela'" :placeholder="'Escuela Superior de Computo'" v-model="form.school" />
-        <BaseInput :label="'Carrera'" :placeholder="'Ingenieria en Sistemas Computacionales'" v-model="form.degree" />
+        <TextField :label="'Escuela'" :placeholder="'Escuela Superior de Computo'" v-model="form.school" />
+        <TextField :label="'Carrera'" :placeholder="'Ingenieria en Sistemas Computacionales'" v-model="form.degree" />
         <div class="w-full flex justify-between items-center gap-4">
-          <BaseInput :label="'Fecha de ingreso'" :placeholder="'2017'" v-model="form.dateInit" />
-          <BaseInput :label="'Fecha de egreso'" :placeholder="'2022'" v-model="form.dateEnd" />
+          <TextField :label="'Fecha de ingreso'" :placeholder="'2017'" v-model="form.dateInit" />
+          <TextField :label="'Fecha de egreso'" :placeholder="'2022'" v-model="form.dateEnd" />
         </div>
       </LayoutForm>
     </li>
@@ -42,19 +42,19 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Id } from '@/shared/types.d'
+import { Id } from '@/shared/models'
 import { useEducation } from '@/stores/education'
 import addIcon from '@/assets/icons/add.svg'
 import deleteIcon from '@/assets/icons/delete.svg'
 import LayoutForm from '@/layouts/LayoutForm.vue'
-import BaseInput from '../Input/BaseInput.vue'
-import Icon from '../Icon/Icon.vue'
+import TextField from '@/features/ui/atoms/TextField.vue'
+import Icon from '@/features/ui/atoms/Icon.vue'
 
 export default defineComponent({
   name: 'FormEducation',
   components: {
     LayoutForm,
-    BaseInput,
+    TextField,
     Icon
   },
   setup () {

@@ -1,17 +1,18 @@
 import { watch } from 'vue'
 import { defineStore } from 'pinia'
-import { STORE_NAME, type Experience, type Id } from '@/shared/types.d'
+import { type ExperienceCv } from '@/shared/models'
+import { STORE_NAME } from '@/shared/enums.d'
 
-const defaultSettings = (): Experience[] => ([{
-  id: crypto.randomUUID(),
+const defaultSettings = (): ExperienceCv[] => ([{
+  id: 1,
   company: '',
   job: '',
   dateInit: '',
   dateEnd: '',
-  details: ''
+  summary: ''
 }])
 
-const getSettings = (): Experience[] => {
+const getSettings = (): ExperienceCv[] => {
   const store = window.localStorage.getItem(STORE_NAME.EXPERIENCE)
   if (store != null) return JSON.parse(store)
   return defaultSettings()
@@ -27,8 +28,8 @@ export const useExperience = defineStore(STORE_NAME.EXPERIENCE, {
   },
   actions: {
     createForm () {
-      const newForm: Experience = {
-        id: crypto.randomUUID(),
+      const newForm: ExperienceCv = {
+        id: 1,
         company: '',
         job: '',
         dateInit: '',
@@ -37,7 +38,7 @@ export const useExperience = defineStore(STORE_NAME.EXPERIENCE, {
       }
       this.formData.push(newForm)
     },
-    deleteForm (formId: Id) {
+    deleteForm (formId: number) {
       const forms = this.formData
       const newForms = forms.filter(form => form.id !== formId)
       this.formData = newForms

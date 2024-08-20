@@ -1,5 +1,15 @@
+export interface SectionCv {
+  id: number
+  title: string
+  summary: string
+  href?: stirng
+  isComplete: boolean
+}
+
 export interface HeaderCv {
-  name: number
+  name: string
+  lastname: string
+  fullname: string
   job: string
   summary: string
   phone: string
@@ -26,6 +36,6 @@ export interface ExperienceCv {
 }
 
 export interface KnowledgeCv {
-  id: null
+  id: number
   skill: string
 }

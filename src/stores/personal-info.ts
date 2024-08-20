@@ -1,21 +1,25 @@
 import { defineStore } from 'pinia'
 import { PersonalInformationSchema } from '@/schemas'
-import { STORE_NAME, type PersonalInfo } from '@/shared/types.d'
+import { type HeaderCv } from '@/shared/models.d'
+import { STORE_NAME } from '@/shared/enums.d'
 
-const getDefaultSettings = (): PersonalInfo => ({
+const getDefaultSettings = (): HeaderCv => ({
   name: '',
-  lastName: '',
+  lastname: '',
+  fullname: '',
   job: '',
-  email: ''
+  socialNetworks: [],
+  summary: '',
+  phone: ''
 })
 
-const getSettings = (): PersonalInfo => {
-  const stored = window.localStorage.getItem(STORE_NAME.PERSONAL_INFORMATION)
+const getSettings = (): HeaderCv => {
+  const stored = window.localStorage.getItem(STORE_NAME.HEADER)
   if (stored != null) return JSON.parse(stored)
   return getDefaultSettings()
 }
 
-export const usePersonalInfoStore = defineStore(STORE_NAME.PERSONAL_INFORMATION, {
+export const usePersonalInfo = defineStore(STORE_NAME.HEADER, {
   state: () => ({ formData: getSettings() }),
   getters: {
     isComplete (state): boolean {
@@ -25,9 +29,9 @@ export const usePersonalInfoStore = defineStore(STORE_NAME.PERSONAL_INFORMATION,
     }
   },
   actions: {
-    updateForm (formData: PersonalInfo) {
-      const { name, lastName, job, email } = formData
-      const result = PersonalInformationSchema.safeParse({ name, lastName, job, email })
+    updateForm (formData: HeaderCv) {
+      const { name, lastname, fullname, job, socialNetworks } = formData
+      const result = PersonalInformationSchema.safeParse({ name, lastname, job, socialNetworks })
 
       if (!result.success) {
         console.error(result.error)
@@ -36,9 +40,9 @@ export const usePersonalInfoStore = defineStore(STORE_NAME.PERSONAL_INFORMATION,
 
       this.formData = {
         ...this.formData,
-        ...{ name, lastName, job, email }
+        ...{ name, lastname, job, socialNetworks }
       }
-      window.localStorage.setItem(STORE_NAME.PERSONAL_INFORMATION, JSON.stringify(this.formData))
+      window.localStorage.setItem(STORE_NAME.HEADER, JSON.stringify(this.formData))
     }
   }
 })

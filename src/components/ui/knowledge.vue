@@ -13,7 +13,7 @@
             </button>
           </template>
         </header>
-        <BaseInput type="text" :placeholder="'typescript'" :label="'Habilidad'" v-model="form.skill" />
+        <TextField type="text" :placeholder="'typescript'" :label="'Habilidad'" v-model="form.skill" />
       </LayoutForm>
     </li>
   </TransitionGroup>
@@ -40,16 +40,16 @@
 import { computed, defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSkills } from '@/stores/knowledge'
-import { Id } from '@/shared/types.d'
+import { Id } from '@/shared/models'
 import deleteIcon from '@/assets/icons/delete.svg'
 import addIcon from '@/assets/icons/add.svg'
-import Icon from '../Icon/Icon.vue'
 import LayoutForm from '@/layouts/LayoutForm.vue'
-import BaseInput from '../Input/BaseInput.vue'
+import Icon from '@/features/ui/atoms/Icon.vue'
+import TextField from '@/features/ui/atoms/TextField.vue'
 
 export default defineComponent({
   name: 'FormSkills',
-  components: { BaseInput, Icon, LayoutForm },
+  components: { TextField, Icon, LayoutForm },
   setup () {
     const skillsStore = useSkills()
     const { formData, hasMultipleForms } = storeToRefs(skillsStore)
